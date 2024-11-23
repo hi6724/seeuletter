@@ -26,11 +26,7 @@ const SignUp = () => {
 
   // 로그인 하면 그냥 접속?
   // 회원 가입시 중복 조회
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -43,10 +39,25 @@ const SignUp = () => {
       body: data.nickname,
     })
       .then((response) => response.json())
-      .then((datadata) => {
-        console.log(datadata);
+      .then(async (datadata) => {
         if (datadata?.isSuccess) {
+          const invitationId = localStorage.getItem('invitationId');
           localStorage.setItem('uuid', data.nickname);
+          if (invitationId) {
+            await fetch(`https://dev.inyro.site/api/v1/guests/join`, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+              body: JSON.stringify({
+                houseId: invitationId,
+                guestName: data.nickname,
+              }),
+            });
+            localStorage.removeItem('invitationId');
+            router.push(`/room/${invitationId}`);
+            return;
+          }
           handleToMain();
         } else {
           setTouched(true);

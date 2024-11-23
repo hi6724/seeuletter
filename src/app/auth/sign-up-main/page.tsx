@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
+import Link from 'next/link';
 
 // 회원가입
 const SignUp = () => {
@@ -54,11 +55,28 @@ const SignUp = () => {
         body: nickname,
       })
         .then((response) => response.json())
-        .then((datadata) => {
-          console.log(datadata);
+        .then(async (datadata) => {
+          const invitationId = localStorage.getItem('invitationId');
+          if (invitationId) {
+            await fetch(`https://dev.inyro.site/api/v1/guests/join`, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+              body: JSON.stringify({
+                houseId: invitationId,
+                guestName: nickname,
+              }),
+            });
+            localStorage.setItem('uuid', nickname);
+            localStorage.removeItem('invitationId');
+            router.push(`/room/${invitationId}`);
+            return;
+          }
           if (datadata?.isSuccess) {
             localStorage.setItem('uuid', nickname);
             router.push('/main');
+            return;
           }
         });
       // .catch(() => {});
@@ -99,6 +117,12 @@ const SignUp = () => {
         ) : (
           <></>
         )}
+        <Link
+          style={{ fontSize: '14px', textAlign: 'center', marginTop: '8px', color: '#424242' }}
+          href={'/auth/sign-up'}
+        >
+          로그인하러가기
+        </Link>
       </ContentBox>
       <Button buttonContent={`가입하기`} onClick={handleClick}></Button>
     </Container>
