@@ -5,10 +5,22 @@ import CalendarWrap from '../../components/create/CalendarWrap';
 import styled from 'styled-components';
 import Header from '@/components/common/Header';
 import Button from '@/components/common/Button';
+import { useRouter } from 'next/navigation';
+
 const CreateRoom = () => {
+  const router = useRouter();
+
+  const handleClickPrev = () => {
+    router.push('/main');
+  };
+
+  const handleClickNext = () => {
+    router.push('/create/invitation');
+  };
+
   return (
     <CreateRoomContainer>
-      <Header headerTitle="방 만들기" />
+      <Header headerTitle="방 만들기" onClick={handleClickPrev} />
       <InputContainer>
         <InputItemWrapper>
           <InputTitle>모임 이름</InputTitle>
@@ -23,7 +35,7 @@ const CreateRoom = () => {
         <InputTitle>날짜</InputTitle>
         <CalendarWrap />
       </CalendarContainer>
-      <Button buttonContent={'다음으로'} />
+      <Button buttonContent={'다음으로'} onClick={handleClickNext} />
     </CreateRoomContainer>
   );
 };
