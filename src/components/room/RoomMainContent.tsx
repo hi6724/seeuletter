@@ -16,10 +16,24 @@ function RoomMainContent({ roomData }: any) {
   const pathname = usePathname();
 
   const router = useRouter();
-  const handleClick = (data: { openDate: number; roomId: string }) => {
+  const handleClick = (data: { headCount: number; openDate: number; roomId: string }) => {
+    if (data.headCount === 0) {
+      alert('인원이 없습니다');
+      return;
+    }
     if (data.openDate === 0) {
       router.push(`${pathname}/chat/${data.roomId}`);
     } else alert('아직 열 수 없습니다');
+  };
+
+  const handleClickCopy = () => {
+    const textArea = document.createElement('textarea');
+    textArea.value = `https://45d1-220-117-166-129.ngrok-free.app/invitation/${pathname.split('/')[2]}`;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    alert('복사되었습니다');
   };
   return (
     <>
@@ -42,8 +56,10 @@ function RoomMainContent({ roomData }: any) {
       </MainContent>
       <Background src={bg.src} alt="" />
       <Clipboard>
-        <div>여기 주소</div>
-        <button>복사</button>
+        <div className="wrapper">
+          <div className="srctext">https://45d1-220-117-166-129.ngrok-free.app/invitation/{pathname.split('/')[2]}</div>
+        </div>
+        <button onClick={handleClickCopy}>복사하기</button>
       </Clipboard>
     </>
   );
@@ -54,6 +70,34 @@ const Clipboard = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 19;
+  position: fixed;
+  bottom: 16px;
+  width: 90%;
+  left: 5%;
+  background-color: #fff;
+  .srctext {
+    white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    overflow-y: hidden; /* 세로 스크롤 비활성화 */
+    max-width: 250px;
+  }
+  button {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    width: 100%;
+    display: flex;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex: 1 0 0;
+    align-self: stretch;
+    background-color: #222f40;
+    color: #fff;
+  }
 `;
 const Row = styled.div`
   display: flex;
