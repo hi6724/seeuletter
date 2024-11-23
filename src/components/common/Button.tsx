@@ -4,11 +4,12 @@ import styled from 'styled-components';
 interface ButtonContentProps {
   buttonContent: string;
   onClick: () => void;
+  style?: React.CSSProperties;
 }
 
-const Button = ({ buttonContent, onClick }: ButtonContentProps) => {
+const Button = ({ buttonContent, onClick, style }: ButtonContentProps) => {
   return (
-    <NextButtonContainer>
+    <NextButtonContainer style={style}>
       <NextButton onClick={onClick}>{buttonContent}</NextButton>
     </NextButtonContainer>
   );
