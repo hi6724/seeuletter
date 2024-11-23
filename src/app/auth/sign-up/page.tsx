@@ -7,11 +7,14 @@ import { schema } from '@/constants/schema';
 import { useForm } from 'react-hook-form';
 import signMainImage from '../../../assets/signMainImage.png';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 // 회원가입
 const SignUp = () => {
   const router = useRouter();
+
+  const [isExist, setIsExist] = useState<any>();
+  const [touched, setTouched] = useState<any>();
 
   const handleToSign = () => {
     router.push('/auth/sign-up-main');
@@ -39,8 +42,18 @@ const SignUp = () => {
       },
       body: data.nickname,
     })
-      .then((response) => { localStorage.setItem('uuid', data.nickname); handleToMain();})
-      .catch((error) => console.log('error:', error));
+      .then((response) => response.json())
+      .then((datadata) => {
+        console.log(datadata)
+        if(datadata?.isSuccess) { 
+          localStorage.setItem('uuid', data.nickname); 
+          handleToMain();
+        } else {
+          setTouched(true);
+          setIsExist(false);
+          
+        }
+      })
   };
 
   return (
@@ -51,7 +64,9 @@ const SignUp = () => {
           <div>
             <p>닉네임을 입력해주세요</p>
             <input placeholder={`닉네임을 입력해주세요!`} type={'nickname'} {...register('nickname')} />
-            {/* <AlertPTag>사용가능한 닉네임입니다.</AlertPTag> */}
+            { touched && <>
+              { isExist ? <></>: <AlertPTag>닉네임이 존재하지 않습니다.</AlertPTag>}
+            </>}
           </div>
           <StartButton type="submit">지금 시작할게요</StartButton>
           <CreateAccountButton onClick={handleToSign}>계정 생성하기 &gt; </CreateAccountButton>
