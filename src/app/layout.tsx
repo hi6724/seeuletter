@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Head from 'next/head';
-import StyledComponentsRegistry from './components/StyledComponentRegistry';
-import Transition from './components/Transition';
-import KakaoScript from './components/KakaoScript';
-import ThemeClient from './components/ThemeClient';
+import StyledComponentsRegistry from '../components/StyledComponentRegistry';
+import Transition from '../components/Transition';
+import KakaoScript from '../components/KakaoScript';
+import ThemeClient from '../components/ThemeClient';
 
 const inter = Inter({ subsets: ['latin'] });
 
