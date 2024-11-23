@@ -5,6 +5,7 @@ import CardTitle from './CardTitle';
 import Letter from './Letter';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { usePathname } from 'next/navigation';
 
 function CardContent({ letterList }: any) {
   const [index, setIndex] = useState(0);
@@ -37,15 +38,35 @@ function CardContent({ letterList }: any) {
 export default CardContent;
 
 function Popup({ popupState, letterList, index }: any) {
+  const pathname = usePathname();
   const [popupData, setShowPopup] = popupState;
   const currentLetter = letterList[index];
   const isNewLetter = popupData === true;
-  const { register } = useForm();
+  const { register, getValues } = useForm();
 
   const username = typeof window !== 'undefined' ? (localStorage.getItem('uuid') as string) : '';
 
   const handleSubmit = async () => {
-    setShowPopup(false);
+    const content = getValues('content');
+    const houseId = pathname.split('/')[2];
+    if (!content) {
+      alert('내용을 입력해주세요');
+      return;
+    }
+
+    fetch('https://dev.inyro.site/api/v1/letters', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        receiver: currentLetter?.guest,
+        writer: username,
+        houseId,
+        content,
+      }),
+    });
+    window.location.reload();
   };
 
   return (

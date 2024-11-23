@@ -28,7 +28,7 @@ const MainContent = () => {
       <GroupContainer>
         <Groups />
       </GroupContainer>
-      <Button buttonContent={'방 만들기'} onClick={handleClickCreateRoom} buttonColor="#D9621F" />
+      <Button buttonContent={'방 만들기'} onClick={handleClickCreateRoom} disabled={true} />
     </MainContainer>
   );
 };
