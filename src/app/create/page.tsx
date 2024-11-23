@@ -24,7 +24,6 @@ const CreateRoom = () => {
     const userUuid = localStorage.getItem('uuid');
     if (userUuid) {
       setUserName(userUuid);
-      console.log('uuid: ', userUuid);
     } else {
       console.warn('uuid가 로컬 스토리지에 존재하지 않습니다.');
     }
@@ -44,7 +43,6 @@ const CreateRoom = () => {
 
   const handleDataChange = (data: string) => {
     setSelectedDate(data);
-    console.log('selectData', selectedDate);
   };
 
   return (

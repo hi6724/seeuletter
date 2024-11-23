@@ -19,11 +19,16 @@ const CalendarWrap = ({ onDateChange }: CalendarWrapProps) => {
 
   const handleDateChange = (newDate: Value) => {
     setDate(newDate);
-    console.log(newDate);
 
     if (newDate instanceof Date) {
       const formattedDate = moment(newDate).format('YYYY-MM-DD');
       onDateChange(formattedDate);
+
+      // 이전 날짜 선택 시 알림창 띄우기
+      const todayDateString = moment(today).format('YYYY-MM-DD');
+      if (moment(newDate).isBefore(todayDateString)) {
+        alert('오늘보다 이전 날짜는 선택할 수 없습니다.');
+      }
     }
   };
 
