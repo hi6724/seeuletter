@@ -28,7 +28,7 @@ const CreateRoom = () => {
       <GroupContainer>
         <Groups userName={userName} />
       </GroupContainer>
-      <Button buttonContent={'방 만들기'} onClick={handleClickCreateRoom} buttonColor="#D9621F" color="white" />
+      <Button buttonContent={'방 만들기'} onClick={handleClickCreateRoom} />
     </div>
   );
 };
