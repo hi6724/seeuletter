@@ -36,7 +36,7 @@ function RoomMainContent({ roomData }: any) {
     alert('복사되었습니다');
   };
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <Header roomData={roomData} />
       <MainContent>
         <Row>
@@ -61,7 +61,7 @@ function RoomMainContent({ roomData }: any) {
         </div>
         <button onClick={handleClickCopy}>복사하기</button>
       </Clipboard>
-    </>
+    </div>
   );
 }
 
@@ -111,13 +111,13 @@ const Window = styled.div`
   display: flex;
   justify-content: center;
   img {
-    width: 30vw;
+    width: min(30vw, 163px);
   }
 `;
 
 const MainContent = styled.div`
   padding-top: 75vw;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -126,11 +126,11 @@ const MainContent = styled.div`
 `;
 
 const Background = styled.img`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 0;
-  width: 100vw;
+  width: min(100vw, 500px);
 `;
 
 function formatDate(dateString: string) {
@@ -162,7 +162,7 @@ function Header({ roomData }: any) {
 }
 
 const HeaderContainer = styled.div`
-  position: fixed;
+  position: absolute;
   top: 10vw;
   z-index: 9;
   color: white;
