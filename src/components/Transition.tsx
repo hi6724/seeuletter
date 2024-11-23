@@ -29,7 +29,7 @@ export default function Transition({ children }: { children: React.ReactNode }) 
     if (uuid && (pathname === '/auth/sign-up' || pathname === '/auth/sign-up-main')) {
       router.replace('/main');
     }
-  }, [uuid]);
+  }, [uuid, pathname]);
 
   return (
     <>

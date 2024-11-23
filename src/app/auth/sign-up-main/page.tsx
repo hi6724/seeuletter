@@ -4,15 +4,13 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { schema } from '@/constants/schema';
+
 // 회원가입
 const SignUp = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    if(isSign) {
+    if (isSign) {
       onclickSignUp();
     } else {
       inputRef.current.focus();
@@ -24,18 +22,9 @@ const SignUp = () => {
   const [touched, setTouched] = useState<boolean>(false);
   const [isSign, setIsSign] = useState<any>(false);
   const inputRef = useRef<any>();
-  // const {
-  //   getValues,
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm({
-  //   resolver: yupResolver(schema),
-  // });
 
   const onCheck = async () => {
     setTouched(true);
-    try {
     await fetch('http://dev.inyro.site/api/v1/admins/login', {
       method: 'POST',
       headers: {
@@ -43,20 +32,16 @@ const SignUp = () => {
       },
       body: nickname,
     })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      if(data?.isSuccess) {
-        setIsSign(false)
-        setIsId(false);
-      } else {
-        setIsSign(true)
-        setIsId(true);
-      }
+      .then((response) => response.json())
+      .then((data) => {
+        if (data?.isSuccess) {
+          setIsSign(false);
+          setIsId(false);
+        } else {
+          setIsSign(true);
+          setIsId(true);
+        }
       });
-
-    } catch {
-    }
   };
 
   const onclickSignUp = async () => {
@@ -67,9 +52,15 @@ const SignUp = () => {
           'Content-Type': 'application/json',
         },
         body: nickname,
-      }).then(() => {
-        router.push('/main');
-      });
+      })
+        .then((response) => response.json())
+        .then((datadata) => {
+          console.log(datadata);
+          if (datadata?.isSuccess) {
+            localStorage.setItem('uuid', nickname);
+            router.push('/main');
+          }
+        });
       // .catch(() => {});
     } catch {
       setIsId(true);

@@ -7,7 +7,7 @@ import { schema } from '@/constants/schema';
 import { useForm } from 'react-hook-form';
 import signMainImage from '../../../assets/signMainImage.png';
 import { useRouter } from 'next/navigation';
-import { use, useState } from 'react';
+import { useState } from 'react';
 
 // 회원가입
 const SignUp = () => {
@@ -44,16 +44,15 @@ const SignUp = () => {
     })
       .then((response) => response.json())
       .then((datadata) => {
-        console.log(datadata)
-        if(datadata?.isSuccess) { 
-          localStorage.setItem('uuid', data.nickname); 
+        console.log(datadata);
+        if (datadata?.isSuccess) {
+          localStorage.setItem('uuid', data.nickname);
           handleToMain();
         } else {
           setTouched(true);
           setIsExist(false);
-          
         }
-      })
+      });
   };
 
   return (
@@ -64,9 +63,7 @@ const SignUp = () => {
           <div>
             <p>닉네임을 입력해주세요</p>
             <input placeholder={`닉네임을 입력해주세요!`} type={'nickname'} {...register('nickname')} />
-            { touched && <>
-              { isExist ? <></>: <AlertPTag>닉네임이 존재하지 않습니다.</AlertPTag>}
-            </>}
+            {touched && <>{isExist ? <></> : <AlertPTag>닉네임이 존재하지 않습니다.</AlertPTag>}</>}
           </div>
           <StartButton type="submit">지금 시작할게요</StartButton>
           <CreateAccountButton onClick={handleToSign}>계정 생성하기 &gt; </CreateAccountButton>
