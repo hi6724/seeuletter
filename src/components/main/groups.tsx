@@ -81,7 +81,7 @@ const GroupsContainer = styled.div`
 `;
 
 const NoGroupsContainer = styled.div`
-  min-height: 8px;
+  min-height: 308px;
   box-sizing: border-box;
   border-radius: 12px;
   background-color: white;
