@@ -37,6 +37,7 @@ const SignUp = () => {
         'Content-Type': 'application/json',
       },
       body: data.nickname,
+      cache: 'no-cache',
     })
       .then((response) => response.json())
       .then(async (datadata) => {
@@ -53,6 +54,7 @@ const SignUp = () => {
                 houseId: invitationId,
                 guestName: data.nickname,
               }),
+              cache: 'no-cache',
             });
             localStorage.removeItem('invitationId');
             router.push(`/room/${invitationId}`);

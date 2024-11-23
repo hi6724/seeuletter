@@ -33,6 +33,7 @@ const SignUp = () => {
         'Content-Type': 'application/json',
       },
       body: nickname,
+      cache: 'no-cache',
     })
       .then((response) => response.json())
       .then((data) => {
@@ -54,6 +55,7 @@ const SignUp = () => {
           'Content-Type': 'application/json',
         },
         body: nickname,
+        cache: 'no-cache',
       })
         .then((response) => response.json())
         .then(async (datadata) => {
@@ -68,6 +70,7 @@ const SignUp = () => {
                 houseId: invitationId,
                 guestName: nickname,
               }),
+              cache: 'no-cache',
             });
             localStorage.setItem('uuid', nickname);
             localStorage.removeItem('invitationId');
