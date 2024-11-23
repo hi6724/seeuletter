@@ -33,7 +33,7 @@ async function fetchChatData(id: string) {
 async function CardPage({ params: { id } }: { params: { id: string } }) {
   const chatListData = await fetchChatData(id);
   return (
-    <div>
+    <div style={{ padding: '0 16px' }}>
       <CardContent letterList={chatListData} />
     </div>
   );

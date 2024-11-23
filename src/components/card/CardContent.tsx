@@ -9,8 +9,6 @@ function CardContent({ letterList }: any) {
   return (
     <div>
       <CardTitle indexState={[index, setIndex]} letterList={letterList} />
-      <button onClick={() => setIndex(index - 1)}>-</button>
-      <button onClick={() => setIndex(index + 1)}>+</button>
       <h1>{currentLetter?.username}</h1>
       <h2>{currentLetter?.username}님에게 편지를 작성해주세요!</h2>
       <div></div>
