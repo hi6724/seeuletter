@@ -2,10 +2,16 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 import letterType1 from '../../assets/letterType1.png';
+import letterType2 from '../../assets/letter2.png';
+import letterType3 from '../../assets/letter3.png';
+
+const LETTER_LIST = [letterType1, letterType2, letterType3];
+
 import { useRouter } from 'next/navigation';
 function LetterInEnvolope({ data }: any) {
   const username = typeof window !== 'undefined' ? (localStorage.getItem('uuid') as string) : '';
   const router = useRouter();
+
   const handleClick = () => {
     if (!username) {
       localStorage.setItem('invitationId', data?.houseId);
@@ -18,7 +24,7 @@ function LetterInEnvolope({ data }: any) {
     <Container>
       <Title>{data?.result?.owner}님이 모임에 초대했습니다.</Title>
       <LetterContainer>
-        <Image src={letterType1.src} fill alt="theme 1" />
+        <Image src={LETTER_LIST[data?.result?.imageNum - 1]?.src} fill alt="theme 1" />
         <FloatDiv>
           <TextDiv>
             <h3>{data?.result.name} 초대장</h3>
