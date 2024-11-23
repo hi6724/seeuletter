@@ -54,16 +54,12 @@ const CreateRoom = () => {
           <InputStyle
             onChange={(e) => setGroupName(e.target.value)}
             type="text"
-            placeholder="8자 이내로 작성해주세요"
+            placeholder="모임 이름을 입력해주세요"
           />
         </InputItemWrapper>
         <InputItemWrapper>
           <InputTitle>장소</InputTitle>
-          <InputStyle
-            onChange={(e) => setLocationName(e.target.value)}
-            type="text"
-            placeholder="8자 이내로 작성해주세요"
-          />
+          <InputStyle onChange={(e) => setLocationName(e.target.value)} type="text" placeholder="장소를 입력해주세요" />
         </InputItemWrapper>
       </InputContainer>
       <CalendarContainer>
