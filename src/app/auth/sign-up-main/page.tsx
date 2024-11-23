@@ -11,7 +11,8 @@ const SignUp = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    if (isSign) {
+    if(isSign) {
+      localStorage.setItem('uuid', nickname);
       onclickSignUp();
     } else {
       inputRef.current.focus();
