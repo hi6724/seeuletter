@@ -10,10 +10,10 @@ import ThemeClient from '../components/ThemeClient';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '어떵오름',
-  description: '나와 제주의 자연을 잇는 서비스',
+  title: '씨유레터',
+  description: '씨유레터',
   icons: {
-    icon: '/favicon.png',
+    icon: '/favicon.ico',
   },
 };
 

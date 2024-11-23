@@ -4,14 +4,14 @@ function LetterFront({ ...rest }: any) {
   return (
     <svg width="640" height="290" viewBox="0 0 320 145" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M320 0.939186C319.124 0.762121 318.191 0.878537 317.357 1.31355L165 80.8067V144.098H320V0.939186Z"
         fill="#D9621F"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M0 0.939186C0.876251 0.762121 1.80927 0.878537 2.64301 1.31355L155 80.8067V144.098H0V0.939186Z"
         fill="#D9621F"
       />
@@ -22,8 +22,8 @@ function LetterFront({ ...rest }: any) {
       <path
         d="M30 118.653L72.0826 92.3265L114.165 66M298 126L250.749 97.2245L203.499 68.449"
         stroke="#C0561A"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
     </svg>
   );

@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { LayoutRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useContext, useRef } from 'react';
 
@@ -16,6 +16,16 @@ function FrozenRouter(props: { children: React.ReactNode }) {
 
 export default function Transition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const uuid = typeof window !== 'undefined' ? (localStorage.getItem('uuid') as string) : '';
+
+  useEffect(() => {
+    const invitationId = pathname.includes('invitation') ? pathname.split('/')[2] : null;
+    if (!invitationId && !uuid) {
+      router.push('/auth/sign-up');
+    }
+  }, [uuid]);
 
   return (
     <>
