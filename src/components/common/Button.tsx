@@ -4,36 +4,13 @@ import styled from 'styled-components';
 interface ButtonContentProps {
   buttonContent: string;
   onClick: () => void;
-  buttonColor?: string;
-  // activeColor?: string;
-  // isActive?: boolean;
-  // color?: string;
+  disabled?: boolean;
 }
 
-// interface StyledButtonProps {
-//   buttonColor?: string;
-//   activeColor?: string;
-//   isActive?: boolean;
-//   color?: string;
-// }
-
-const Button = ({
-  buttonContent,
-  onClick,
-}: // buttonColor = '#e0e0e0',
-// activeColor = '#222f40',
-// color = 'fff',
-// isActive,
-ButtonContentProps) => {
+const Button = ({ buttonContent, onClick, disabled }: ButtonContentProps) => {
   return (
     <NextButtonContainer>
-      <NextButton
-        // buttonColor={buttonColor}
-        // activeColor={activeColor}
-        // isActive={isActive}
-        // color={color}
-        onClick={onClick}
-      >
+      <NextButton onClick={disabled ? undefined : onClick} disabled={disabled}>
         {buttonContent}
       </NextButton>
     </NextButtonContainer>
@@ -55,17 +32,18 @@ const NextButtonContainer = styled.div`
   justify-content: center;
   padding: 0 16px;
   border-top: 1px solid #e5e5ea;
+  z-index: 1000;
 `;
 
-const NextButton = styled.div`
+const NextButton = styled.div<{ disabled?: boolean }>`
   width: 100%;
   max-width: 450px;
   padding: 16px 0;
   margin-top: 16px;
   box-sizing: border-box;
   text-align: center;
-  color: white;
-  background: #d9621f;
+  color: ${({ disabled }) => (disabled ? '#1D1B20' : 'white')};
+  background: ${({ disabled }) => (disabled ? '#E0E0E0' : '#43566E')};
   border-radius: 9000px;
   cursor: pointer;
 `;
