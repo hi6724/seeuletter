@@ -16,19 +16,17 @@ function LetterInEnvolope({ data }: any) {
   };
   return (
     <Container>
-      <Title>엘빈님이 모임에 초대했습니다.</Title>
+      <Title>{data?.result?.owner}님이 모임에 초대했습니다.</Title>
       <LetterContainer>
         <Image src={letterType1.src} fill alt="theme 1" />
         <FloatDiv>
           <TextDiv>
             <h3>{data?.result.name} 초대장</h3>
             <h3>날짜 : {data?.result.date}</h3>
-            <h3>장소</h3>
+            <h3>장소 {data?.result?.location ?? '값이 없습니다'}</h3>
             <div style={{ height: '0.5px', border: '1px solid black' }}></div>
             <div style={{ height: '40%', overflow: 'scroll' }}>
-              <p>
-                작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용
-              </p>
+              <p>{data?.result.content ?? '값이 없습니다'}</p>
             </div>
           </TextDiv>
         </FloatDiv>

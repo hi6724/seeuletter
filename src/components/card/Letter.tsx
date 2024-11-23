@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 function Letter({ indexState, letterList, popupState }: any) {
   const [index] = indexState;
-  const currentData = letterList[index];
+  const currentData = letterList?.[index];
   const currentLetters = currentData?.letters;
   const setShowPopup = popupState[1];
 

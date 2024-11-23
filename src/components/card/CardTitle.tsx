@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 function CardTitle({ indexState, letterList }: any) {
   const [index, setIndex] = indexState;
-  const currentLetter = letterList[index];
+  const currentLetter = letterList?.[index];
   const handleClick = (type: 'prev' | 'next') => {
     if (type === 'prev') {
       const newIndex = index > 0 ? index - 1 : 0;
@@ -29,7 +29,7 @@ function CardTitle({ indexState, letterList }: any) {
         transition={{ duration: 0.3 }} // 애니메이션 지속 시간
       >
         <StyledCardTitle>To.{currentLetter?.guest}</StyledCardTitle>
-        <SecondaryText>{`(${index + 1}/${letterList.length})`}</SecondaryText>
+        <SecondaryText>{`(${index + 1}/${letterList?.length})`}</SecondaryText>
       </motion.div>
       <CircleButton onClick={() => handleClick('next')}>
         <RightArrow />
