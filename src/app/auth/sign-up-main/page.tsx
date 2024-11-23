@@ -2,57 +2,91 @@
 import Header from '@/components/common/Header';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '@/constants/schema';
 // 회원가입
 const SignUp = () => {
+  const router = useRouter();
 
+  const handleClick = () => {
+    onclickclick();
+  };
+
+  const [nickname, setNickname] = useState<any>();
   const [isId, setIsId] = useState<boolean>(true);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  const [touched, setTouched] = useState<boolean>(false);
+  // const {
+  //   getValues,
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm({
+  //   resolver: yupResolver(schema),
+  // });
 
-  const onCheck = async (data: any) => {
-    console.log(data.nickname);
-    console.log('요청');
+  const onCheck = async () => {
+    setTouched(true);
     await fetch('http://dev.inyro.site/api/v1/admins/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: data.nickname,
+      body: nickname,
     })
       .then(() => setIsId(false))
       .catch(() => setIsId(true));
   };
 
+  const onclickclick = async () => {
+    await fetch('https://dev.inyro.site/api/v1/admins/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: nickname,
+    })
+      .then(() => {
+        router.push('/auth/sign-up');
+      })
+      .catch(() => setIsId(true));
+  };
+
   return (
     <Container>
-      <Header headerTitle="회원가입"></Header>
+      <Header headerTitle="회원가입" onClick={() => {}}></Header>
       <TitleBox>
         <h4>닉네임을 작성해주세요</h4>
         <SubTitle>한번 정한 이름은 수정할 수 없어요</SubTitle>
       </TitleBox>
       <ContentBox>
         <LabelPTag>닉네임을 설정해주세요</LabelPTag>
-        <form onSubmit={handleSubmit(onCheck)}>
-          <div>
-            <Input placeholder={`닉네임을 입력해주세요!`} type={'nickname'} {...register('nickname')} />
-            <CheackButton>중복확인</CheackButton>
-          </div>
-        </form>
-        { isId ? (<AlertPTag $State={true}>사용가능한 닉네임입니다.</AlertPTag>) : (
-          <AlertPTag $State={false}>닉네임을 다시 입력해주세요.</AlertPTag>
+        <div>
+          <Input
+            placeholder={`닉네임을 입력해주세요!`}
+            type={'nickname'}
+            value={nickname}
+            onChange={(e) => {
+              setNickname(e.target.value);
+            }}
+          />
+          <CheackButton onClick={onCheck}>중복확인</CheackButton>
+        </div>
+        {touched ? (
+          <>
+            {isId ? (
+              <AlertPTag $State={true}>사용가능한 닉네임입니다.</AlertPTag>
+            ) : (
+              <AlertPTag $State={false}>닉네임을 다시 입력해주세요.</AlertPTag>
+            )}
+          </>
+        ) : (
+          <></>
         )}
       </ContentBox>
-      <Button buttonContent={`가입하기`} ></Button>
+      <Button buttonContent={`가입하기`} onClick={handleClick}></Button>
     </Container>
   );
 };

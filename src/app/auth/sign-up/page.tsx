@@ -14,7 +14,7 @@ const SignUp = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push('/auth/sign-up-main');
+    router.push('/main');
   };
 
   // 로그인 하면 그냥 접속?
@@ -28,8 +28,6 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data: any) => {
-    console.log(data);
-    console.log('요청');
     await fetch('https://dev.inyro.site/api/v1/admins/login', {
       method: 'POST',
       headers: {
@@ -37,7 +35,7 @@ const SignUp = () => {
       },
       body: data.nickname,
     })
-      .then((response) => console.log('response:', response))
+      .then((response) => { localStorage.setItem('uuid', data.nickname); handleClick();})
       .catch((error) => console.log('error:', error));
   };
 
@@ -49,7 +47,7 @@ const SignUp = () => {
           <div>
             <p>닉네임을 입력해주세요</p>
             <input placeholder={`닉네임을 입력해주세요!`} type={'nickname'} {...register('nickname')} />
-            <AlertPTag>사용가능한 닉네임입니다.</AlertPTag>
+            {/* <AlertPTag>사용가능한 닉네임입니다.</AlertPTag> */}
           </div>
           <StartButton type="submit">지금 시작할게요</StartButton>
           <CreateAccountButton onClick={handleClick}>계정 생성하기 &gt; </CreateAccountButton>
