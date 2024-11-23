@@ -25,7 +25,7 @@ function CreateInvitationPage() {
   };
 
   useEffect(() => {
-    const imageNumber = localStorage.setItem('imageNumber', 1);
+    localStorage.setItem('imageNumber', '1');
   }, []);
 
   const handleTextArea = (content: string) => {

@@ -95,7 +95,7 @@ function Popup({ popupState, letterList, index }: any) {
         </PopupHeader>
         {isNewLetter && <StyledTextArea placeholder="내용을 입력해주세요" {...register('content')} />}
         {!isNewLetter && <StyledContentDiv>{popupData?.content}</StyledContentDiv>}
-        <PopupFooter>From. {isNewLetter ? username : popupData?.username}</PopupFooter>
+        <PopupFooter>From. {isNewLetter ? username : popupData?.writer}</PopupFooter>
         {isNewLetter && <PopupBtn onClick={handleSubmit}>전송하기</PopupBtn>}
       </PopupContainer>
       <Background />
