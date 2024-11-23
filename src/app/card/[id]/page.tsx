@@ -2,7 +2,7 @@ import CardContent from '@/components/card/CardContent';
 
 async function fetchChatData(id: string) {
   const baseURL = new URL(`https://dev.inyro.site/api/v1/letters/${id}`);
-  const res = await fetch(baseURL);
+  const res = await fetch(baseURL, { cache: 'no-cache' });
   const data = await res.json();
   return data;
 }

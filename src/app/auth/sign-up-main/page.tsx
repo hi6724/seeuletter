@@ -11,7 +11,7 @@ const SignUp = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    if(isSign) {
+    if (isSign) {
       localStorage.setItem('uuid', nickname);
       onclickSignUp();
     } else {
@@ -27,7 +27,7 @@ const SignUp = () => {
 
   const onCheck = async () => {
     setTouched(true);
-    await fetch('http://dev.inyro.site/api/v1/admins/login', {
+    await fetch('https://dev.inyro.site/api/v1/admins/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

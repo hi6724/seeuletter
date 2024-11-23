@@ -18,6 +18,7 @@ function LetterInEnvolope({ data }: any) {
       router.push('/auth/sign-up-main');
       return;
     } else {
+        router.push(`/room/${data?.houseId}`);
     }
   };
   return (

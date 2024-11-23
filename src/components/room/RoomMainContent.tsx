@@ -28,7 +28,7 @@ function RoomMainContent({ roomData }: any) {
 
   const handleClickCopy = () => {
     const textArea = document.createElement('textarea');
-    textArea.value = `https://45d1-220-117-166-129.ngrok-free.app/invitation/${pathname.split('/')[2]}`;
+    textArea.value = `https://0469-220-117-166-129.ngrok-free.app/invitation/${pathname.split('/')[2]}`;
     document.body.appendChild(textArea);
     textArea.select();
     document.execCommand('copy');
@@ -57,7 +57,7 @@ function RoomMainContent({ roomData }: any) {
       <Background src={bg.src} alt="" />
       <Clipboard>
         <div className="wrapper">
-          <div className="srctext">https://45d1-220-117-166-129.ngrok-free.app/invitation/{pathname.split('/')[2]}</div>
+          <div className="srctext">https://0469-220-117-166-129.ngrok-free.app/invitation/{pathname.split('/')[2]}</div>
         </div>
         <button onClick={handleClickCopy}>복사하기</button>
       </Clipboard>

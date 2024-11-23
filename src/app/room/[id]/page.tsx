@@ -2,7 +2,9 @@ import RoomMainContent from '@/components/room/RoomMainContent';
 
 async function fetchRoomData(id: string) {
   const baseURL = new URL(`https://dev.inyro.site/api/v1/houses/${id}`);
-  const res = await fetch(baseURL);
+  const res = await fetch(baseURL, {
+    cache: 'no-cache',
+  });
   const data = await res.json();
   return data;
 }
