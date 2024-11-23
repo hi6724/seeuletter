@@ -42,6 +42,7 @@ const StyledCalendarWrapper = styled.div`
   position: relative;
 
   .react-calendar {
+    width: 100%;
     border: none;
     background: transparent;
   }

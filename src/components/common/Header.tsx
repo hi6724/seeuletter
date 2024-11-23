@@ -4,13 +4,14 @@ import backIcon from '../../assets/backIcon.svg';
 
 interface HeaderProps {
   headerTitle: string;
+  onClick: () => void;
 }
 
-const Header = ({ headerTitle }: HeaderProps) => {
+const Header = ({ headerTitle, onClick }: HeaderProps) => {
   return (
     <div>
       <CreateRoomTitle>
-        <img src={backIcon.src} alt="backIcon" />
+        <img src={backIcon.src} alt="backIcon" onClick={onClick} />
         <TitleStyle>{headerTitle}</TitleStyle>
       </CreateRoomTitle>
     </div>
@@ -25,6 +26,10 @@ const CreateRoomTitle = styled.div`
   display: flex;
   align-items: center;
   padding: 0 16px;
+
+  img {
+    cursor: pointer;
+  }
 `;
 
 const TitleStyle = styled.div`
