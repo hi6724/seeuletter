@@ -3,7 +3,7 @@ import Header from '@/components/common/Header';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '@/constants/schema';
@@ -12,12 +12,18 @@ const SignUp = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    onclickclick();
+    if(isSign) {
+      onclickSignUp();
+    } else {
+      inputRef.current.focus();
+    }
   };
 
   const [nickname, setNickname] = useState<any>();
-  const [isId, setIsId] = useState<boolean>(true);
+  const [isId, setIsId] = useState<boolean>(false);
   const [touched, setTouched] = useState<boolean>(false);
+  const [isSign, setIsSign] = useState<any>(false);
+  const inputRef = useRef<any>();
   // const {
   //   getValues,
   //   register,
@@ -29,6 +35,7 @@ const SignUp = () => {
 
   const onCheck = async () => {
     setTouched(true);
+    try {
     await fetch('http://dev.inyro.site/api/v1/admins/login', {
       method: 'POST',
       headers: {
@@ -36,22 +43,37 @@ const SignUp = () => {
       },
       body: nickname,
     })
-      .then(() => setIsId(false))
-      .catch(() => setIsId(true));
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if(data?.isSuccess) {
+        setIsSign(false)
+        setIsId(false);
+      } else {
+        setIsSign(true)
+        setIsId(true);
+      }
+      });
+
+    } catch {
+    }
   };
 
-  const onclickclick = async () => {
-    await fetch('https://dev.inyro.site/api/v1/admins/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: nickname,
-    })
-      .then(() => {
-        router.push('/auth/sign-up');
-      })
-      .catch(() => setIsId(true));
+  const onclickSignUp = async () => {
+    try {
+      await fetch('https://dev.inyro.site/api/v1/admins/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: nickname,
+      }).then(() => {
+        router.push('/main');
+      });
+      // .catch(() => {});
+    } catch {
+      setIsId(true);
+    }
   };
 
   return (
@@ -65,6 +87,7 @@ const SignUp = () => {
         <LabelPTag>닉네임을 설정해주세요</LabelPTag>
         <div>
           <Input
+            ref={inputRef}
             placeholder={`닉네임을 입력해주세요!`}
             type={'nickname'}
             value={nickname}
