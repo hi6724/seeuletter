@@ -5,10 +5,11 @@ import LetterFront from '@/assets/LetterFront';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-function Letter({ indexState, letterList }: any) {
+function Letter({ indexState, letterList, popupState }: any) {
   const [index] = indexState;
   const currentData = letterList[index];
   const currentLetters = currentData?.letters;
+  const setShowPopup = popupState[1];
 
   return (
     <motion.div
@@ -22,7 +23,7 @@ function Letter({ indexState, letterList }: any) {
       <LetterContainer>
         <StyledTitle>{currentData?.username}님에게 편지를 작성해주세요!</StyledTitle>
         {currentLetters.map((letter: any, idx: number) => (
-          <StyledLetter key={idx}>
+          <StyledLetter key={idx} onClick={() => setShowPopup(letter)}>
             <FlexBox>
               <h3>{letter.username}</h3>
               <p>{letter.content}</p>
@@ -97,10 +98,20 @@ const StyledLetter = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 12px;
+  cursor: pointer;
   h3 {
     font-weight: 600;
-    width: 48px;
+    width: 54px;
     margin-right: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  p {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `;
 
