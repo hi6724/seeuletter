@@ -29,19 +29,21 @@ async function fetchGroups(username: string) {
 
 const Groups = () => {
   const [groups, setGroups] = useState([]);
-  const userName = typeof window !== 'undefined' ? (localStorage.getItem('uuid') as string) : '';
+  const username = typeof window !== 'undefined' ? (localStorage.getItem('uuid') as string) : '';
 
   useEffect(() => {
-    fetchGroups(userName).then((data) => {
+    console.log(username);
+    if (!username) return;
+    fetchGroups(username).then((data) => {
       setGroups(data?.result?.houses);
     });
-  }, [userName]);
+  }, [username]);
 
   console.log(groups);
 
   return (
     <GroupsContainer>
-      <UserTitle>{userName} 님의 모임</UserTitle>
+      <UserTitle>{username} 님의 모임</UserTitle>
       {groups?.map((group: any) => (
         <GroupItem key={group?.houseId} href={`/room/${group?.houseId}`}>
           <DateWrap>{formatDate(group?.date)}</DateWrap>

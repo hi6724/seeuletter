@@ -8,15 +8,18 @@ import d2Img from '@/assets/rooms/d-2.png';
 import d3Img from '@/assets/rooms/d-3.png';
 import d4Img from '@/assets/rooms/d-4.png';
 import d5Img from '@/assets/rooms/d-5.png';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const IMG_LIST = [openedImg, d1Img, d2Img, d3Img, d4Img, d5Img];
 
 function RoomMainContent({ roomData }: any) {
+  const pathname = usePathname();
+
   const router = useRouter();
   const handleClick = (data: { openDate: number; roomId: string }) => {
-    if (data.openDate === 0) router.push(`/card/${data.roomId}`);
-    else alert('아직 열 수 없습니다');
+    if (data.openDate === 0) {
+      router.push(`${pathname}/chat/${data.roomId}`);
+    } else alert('아직 열 수 없습니다');
   };
   console.log(roomData);
   return (
