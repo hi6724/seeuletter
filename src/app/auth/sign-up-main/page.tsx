@@ -13,6 +13,7 @@ const SignUp = () => {
 
   const handleClick = () => {
     if(isSign) {
+      localStorage.setItem('uuid', nickname);
       onclickSignUp();
     } else {
       inputRef.current.focus();
