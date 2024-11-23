@@ -31,7 +31,7 @@ function Letter({ indexState, letterList, popupState }: any) {
             <Divider></Divider>
           </StyledLetter>
         ))}
-        {currentLetters?.length === 0 && (
+        {!currentLetters?.length && (
           <StyledLetter>
             <FlexBox>
               <h4>작성된 편지가 없습니다 🥲🥲</h4>
