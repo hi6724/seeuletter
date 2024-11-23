@@ -5,7 +5,7 @@ import characterImage from '../../assets/character.png';
 import styled from 'styled-components';
 
 const CreateRoom = () => {
-  const [userName, setUserName] = useState('제나');
+  const [userName] = useState('제나');
 
   return (
     <div>
