@@ -35,6 +35,7 @@ export default function RootLayout({
           style={{
             position: 'relative',
             maxWidth: '500px',
+            minHeight: '100vh',
             width: '100%',
             overflowX: 'hidden',
             background: '#f1f1f1',
