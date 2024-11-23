@@ -4,6 +4,7 @@ import { useState } from 'react';
 import CardTitle from './CardTitle';
 import Letter from './Letter';
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
 
 function CardContent({ letterList }: any) {
   const [index, setIndex] = useState(0);
@@ -39,12 +40,19 @@ function Popup({ popupState, letterList, index }: any) {
   const [popupData, setShowPopup] = popupState;
   const currentLetter = letterList[index];
   const isNewLetter = popupData === true;
-  console.log(popupData);
+  const { register } = useForm();
+
+  const username = typeof window !== 'undefined' ? (localStorage.getItem('uuid') as string) : '';
+
+  const handleSubmit = async () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <PopupContainer>
         <PopupHeader>
-          <h2>TO. {currentLetter?.username}</h2>
+          <h2>TO. {currentLetter?.guest}</h2>
           <button onClick={() => setShowPopup(false)}>
             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -64,10 +72,10 @@ function Popup({ popupState, letterList, index }: any) {
             </svg>
           </button>
         </PopupHeader>
-        {isNewLetter && <StyledTextArea placeholder="내용을 입력해주세요" />}
+        {isNewLetter && <StyledTextArea placeholder="내용을 입력해주세요" {...register('content')} />}
         {!isNewLetter && <StyledContentDiv>{popupData?.content}</StyledContentDiv>}
-        <PopupFooter>From. {isNewLetter ? '' : popupData?.username}</PopupFooter>
-        {isNewLetter && <PopupBtn onClick={() => setShowPopup(false)}>전송하기</PopupBtn>}
+        <PopupFooter>From. {isNewLetter ? username : popupData?.username}</PopupFooter>
+        {isNewLetter && <PopupBtn onClick={handleSubmit}>전송하기</PopupBtn>}
       </PopupContainer>
       <Background />
     </>

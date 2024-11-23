@@ -21,17 +21,17 @@ function Letter({ indexState, letterList, popupState }: any) {
       style={{ position: 'relative', display: 'flex', width: '100%', justifyContent: 'center' }}
     >
       <LetterContainer>
-        <StyledTitle>{currentData?.username}님에게 편지를 작성해주세요!</StyledTitle>
-        {currentLetters.map((letter: any, idx: number) => (
+        <StyledTitle>{currentData?.guest}님에게 편지를 작성해주세요!</StyledTitle>
+        {currentLetters?.map((letter: any, idx: number) => (
           <StyledLetter key={idx} onClick={() => setShowPopup(letter)}>
             <FlexBox>
-              <h3>{letter.username}</h3>
-              <p>{letter.content}</p>
+              <h3>{letter?.writer}</h3>
+              <p>{letter?.content}</p>
             </FlexBox>
             <Divider></Divider>
           </StyledLetter>
         ))}
-        {currentLetters.length === 0 && (
+        {currentLetters?.length === 0 && (
           <StyledLetter>
             <FlexBox>
               <h4>작성된 편지가 없습니다 🥲🥲</h4>
