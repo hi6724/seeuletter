@@ -1,14 +1,14 @@
 'use client';
-import React, { useState } from 'react';
 import styled from 'styled-components';
 
-function TextArea() {
-  const [content, setContent] = useState('');
+interface TextAreaProps {
+  onTextArea: (content: string) => void;
+}
 
+function TextArea({ onTextArea }: TextAreaProps) {
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
+    onTextArea(e.target.value);
     localStorage.setItem('content', e.target.value);
-    console.log('content');
   };
 
   return (
@@ -34,6 +34,7 @@ const StyledTextArea = styled.textarea`
   min-width: 200px;
   padding: 16px 12px;
   width: calc(100% - 24px);
+  outline: none;
 
   border-radius: 8px;
   border: 1px solid #d9d9d9;

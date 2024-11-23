@@ -1,29 +1,43 @@
 'use client';
-import { faker } from '@faker-js/faker';
 import Image from 'next/image';
 import styled from 'styled-components';
-import letterType1 from '../../assets/letterType1.png'
-function LetterInEnvolope() {
+import letterType1 from '../../assets/letterType1.png';
+import letterType2 from '../../assets/letter2.png';
+import letterType3 from '../../assets/letter3.png';
 
+const LETTER_LIST = [letterType1, letterType2, letterType3];
+
+import { useRouter } from 'next/navigation';
+function LetterInEnvolope({ data }: any) {
+  const username = typeof window !== 'undefined' ? (localStorage.getItem('uuid') as string) : '';
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (!username) {
+      localStorage.setItem('invitationId', data?.houseId);
+      router.push('/auth/sign-up-main');
+      return;
+    } else {
+    }
+  };
   return (
     <Container>
-      <Header></Header>
-      <Title>엘빈님이 모임에 초대했습니다.</Title>
+      <Title>{data?.result?.owner}님이 모임에 초대했습니다.</Title>
       <LetterContainer>
-        <Image src={letterType1.src} fill alt="theme 1" />
+        <Image src={LETTER_LIST[data?.result?.imageNum - 1]?.src} fill alt="theme 1" />
         <FloatDiv>
           <TextDiv>
-            <h3>방아름 초대장</h3>
-            <h3>날짜 : </h3>
-            <h3>장소</h3>
-            <div style={{ height : '0.5px', border: '1px solid black'}}></div>
-            <div style={{ height : '40%', overflow: 'scroll'}}>
-                <p>작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용작성내용</p>
+            <h3>{data?.result.name} 초대장</h3>
+            <h3>날짜 : {data?.result.date}</h3>
+            <h3>장소 {data?.result?.location ?? '값이 없습니다'}</h3>
+            <div style={{ height: '0.5px', border: '1px solid black' }}></div>
+            <div style={{ height: '40%', overflow: 'scroll' }}>
+              <p>{data?.result.content ?? '값이 없습니다'}</p>
             </div>
           </TextDiv>
         </FloatDiv>
       </LetterContainer>
-      <Button>참여하기</Button>
+      <Button onClick={handleClick}>참여하기</Button>
     </Container>
   );
 }
@@ -38,6 +52,7 @@ const Container = styled.div`
   gap: 20px;
   height: 100%;
   padding: 0 20px;
+  width: 100%;
 `;
 
 const Title = styled.p`
@@ -55,12 +70,12 @@ const FloatDiv = styled.div`
 `;
 
 const TextDiv = styled.div`
-    width: 70%;
-    height: 80%;
-    display : flex;
-    flex-direction : column;
-    gap: 15px;
-`
+  width: 70%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
 const LetterContainer = styled.div`
   position: relative;
   width: 90%;
@@ -79,4 +94,3 @@ const Button = styled.button`
   line-height: var(--Label-Large-Line-Height, 20px); /* 125% */
   letter-spacing: var(--Label-Large-Tracking, 0.1px);
 `;
-

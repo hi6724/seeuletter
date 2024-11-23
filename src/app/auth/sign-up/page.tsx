@@ -7,7 +7,7 @@ import { schema } from '@/constants/schema';
 import { useForm } from 'react-hook-form';
 import signMainImage from '../../../assets/signMainImage.png';
 import { useRouter } from 'next/navigation';
-import { use, useState } from 'react';
+import { useState } from 'react';
 
 // 회원가입
 const SignUp = () => {
@@ -26,11 +26,7 @@ const SignUp = () => {
 
   // 로그인 하면 그냥 접속?
   // 회원 가입시 중복 조회
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -43,17 +39,31 @@ const SignUp = () => {
       body: data.nickname,
     })
       .then((response) => response.json())
-      .then((datadata) => {
-        console.log(datadata)
-        if(datadata?.isSuccess) { 
-          localStorage.setItem('uuid', data.nickname); 
+      .then(async (datadata) => {
+        if (datadata?.isSuccess) {
+          const invitationId = localStorage.getItem('invitationId');
+          localStorage.setItem('uuid', data.nickname);
+          if (invitationId) {
+            await fetch(`https://dev.inyro.site/api/v1/guests/join`, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+              body: JSON.stringify({
+                houseId: invitationId,
+                guestName: data.nickname,
+              }),
+            });
+            localStorage.removeItem('invitationId');
+            router.push(`/room/${invitationId}`);
+            return;
+          }
           handleToMain();
         } else {
           setTouched(true);
           setIsExist(false);
-          
         }
-      })
+      });
   };
 
   return (
@@ -64,9 +74,7 @@ const SignUp = () => {
           <div>
             <p>닉네임을 입력해주세요</p>
             <input placeholder={`닉네임을 입력해주세요!`} type={'nickname'} {...register('nickname')} />
-            { touched && <>
-              { isExist ? <></>: <AlertPTag>닉네임이 존재하지 않습니다.</AlertPTag>}
-            </>}
+            {touched && <>{isExist ? <></> : <AlertPTag>닉네임이 존재하지 않습니다.</AlertPTag>}</>}
           </div>
           <StartButton type="submit">지금 시작할게요</StartButton>
           <CreateAccountButton onClick={handleToSign}>계정 생성하기 &gt; </CreateAccountButton>

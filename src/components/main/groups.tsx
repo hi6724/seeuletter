@@ -24,42 +24,93 @@ async function fetchGroups(username: string) {
   const baseUrl = `https://dev.inyro.site/api/v1/houses?nickname=${username}`;
   const response = await fetch(baseUrl);
   const data = await response.json();
-  return data;
+  // 항상 배열 반환
+  return data?.result?.houses || [];
 }
 
 const Groups = () => {
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState<any[]>([]); // 초기값을 빈 배열로 설정
   const userName = typeof window !== 'undefined' ? (localStorage.getItem('uuid') as string) : '';
 
   useEffect(() => {
-    fetchGroups(userName).then((data) => {
-      setGroups(data?.result?.houses);
-    });
+    if (userName) {
+      fetchGroups(userName).then((data) => {
+        setGroups(data); // fetchGroups가 항상 배열을 반환하므로 안전
+      });
+    }
   }, [userName]);
 
   console.log(groups);
 
   return (
-    <GroupsContainer>
-      <UserTitle>{userName} 님의 모임</UserTitle>
-      {groups?.map((group: any) => (
-        <GroupItem key={group?.houseId} href={`/room/${group?.houseId}`}>
-          <DateWrap>{formatDate(group?.date)}</DateWrap>
-          <RoomName>{group.name}</RoomName>
-          <img src={rightArrow.src} alt="rightArrow" />
-        </GroupItem>
-      ))}
-    </GroupsContainer>
+    <GroupMainContainer>
+      {groups.length === 0 ? (
+        <NoGroupsContainer>
+          <NoGroupWrap>
+            <NoGroupTitles>아직 생성된 방이 없어요</NoGroupTitles>
+            <NoGroupContent>지금 바로 방을 만들어보세요</NoGroupContent>
+          </NoGroupWrap>
+        </NoGroupsContainer>
+      ) : (
+        <GroupsContainer>
+          <UserTitle>{userName} 님의 모임</UserTitle>
+          {groups.map((group: any) => (
+            <GroupItem key={group?.houseId} href={`/room/${group?.houseId}`}>
+              <DateWrap>{formatDate(group?.date)}</DateWrap>
+              <RoomName>{group.name}</RoomName>
+              <img src={rightArrow.src} alt="rightArrow" />
+            </GroupItem>
+          ))}
+        </GroupsContainer>
+      )}
+    </GroupMainContainer>
   );
 };
 
 export default Groups;
 
+const GroupMainContainer = styled.div``;
+
 const GroupsContainer = styled.div`
+  min-height: 308px;
   box-sizing: border-box;
   border-radius: 12px;
   background-color: white;
   margin: 0 16px;
+  padding-bottom: 90px;
+`;
+
+const NoGroupsContainer = styled.div`
+  min-height: 308px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background-color: white;
+  margin: 0 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NoGroupWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+`;
+
+const NoGroupTitles = styled.div`
+  color: var(--GreyScale-Grey-500, #9e9e9e);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+`;
+
+const NoGroupContent = styled.div`
+  color: var(--GreyScale-Grey-500, #9e9e9e);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
 `;
 
 const UserTitle = styled.div`

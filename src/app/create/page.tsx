@@ -12,18 +12,18 @@ const CreateRoom = () => {
   const [groupName, setGroupName] = useState('');
   const [locationName, setLocationName] = useState('');
   const [selectedDate, setSelectedDate] = useState(''); // 선택한 날짜 상태 추가
-
   const router = useRouter();
 
   const handleClickPrev = () => {
     router.push('/main');
   };
 
+  const isButtonDisabled = !groupName || !locationName || !selectedDate;
+
   useEffect(() => {
     const userUuid = localStorage.getItem('uuid');
     if (userUuid) {
       setUserName(userUuid);
-      console.log('uuid: ', userUuid);
     } else {
       console.warn('uuid가 로컬 스토리지에 존재하지 않습니다.');
     }
@@ -43,7 +43,6 @@ const CreateRoom = () => {
 
   const handleDataChange = (data: string) => {
     setSelectedDate(data);
-    console.log('selectData', selectedDate);
   };
 
   return (
@@ -71,7 +70,7 @@ const CreateRoom = () => {
         <InputTitle>날짜</InputTitle>
         <CalendarWrap onDateChange={handleDataChange} />
       </CalendarContainer>
-      <Button buttonContent={'다음으로'} onClick={handleClickNext} />
+      <Button buttonContent={'다음으로'} onClick={handleClickNext} disabled={isButtonDisabled} />
     </CreateRoomContainer>
   );
 };

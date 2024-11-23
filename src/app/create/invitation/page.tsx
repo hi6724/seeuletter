@@ -1,7 +1,7 @@
 'use client';
 
 // import { Metadata } from 'next';
-import React from 'react';
+import React, { useState } from 'react';
 import GridInvitation from '@/components/create/invitation/GridInvitation';
 import TextArea from '@/components/create/invitation/TextArea';
 import Button from '@/components/common/Button';
@@ -10,11 +10,25 @@ import Header from '@/components/common/Header';
 import styled from 'styled-components';
 
 function CreateInvitationPage() {
+  const [isImageSelected, setIsImageSelected] = useState(false);
+  const [textareaContent, setTextareaContent] = useState('');
+
   const router = useRouter();
 
   const handleClick = () => {
     router.push('/create/');
   };
+
+  const handleImageSelect = (imageNumber: number) => {
+    setIsImageSelected(true);
+    localStorage.setItem('imageNumber', JSON.stringify(imageNumber)); // 이미지 번호 저장
+  };
+
+  const handleTextArea = (content: string) => {
+    setTextareaContent(content);
+  };
+
+  const isButtonDisabled = !isImageSelected || !textareaContent;
 
   const handleClickNext = async () => {
     const storedRoomData = localStorage.getItem('roomData');
@@ -59,10 +73,10 @@ function CreateInvitationPage() {
         <h1 style={{ fontSize: '19px', fontWeight: 'bold', lineHeight: '140%', marginBottom: '24px' }}>
           초대장을 작성해주세요
         </h1>
-        <GridInvitation />
-        <TextArea />
+        <GridInvitation onImageSelect={handleImageSelect} />
+        <TextArea onTextArea={handleTextArea} />
       </InvitationWrap>
-      <Button buttonContent={'다음으로'} onClick={handleClickNext} />
+      <Button buttonContent={'다음으로'} onClick={handleClickNext} disabled={isButtonDisabled} />
     </div>
   );
 }

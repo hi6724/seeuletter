@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { schema } from '@/constants/schema';
+import Link from 'next/link';
+
 // 회원가입
 const SignUp = () => {
   const router = useRouter();
@@ -25,18 +24,9 @@ const SignUp = () => {
   const [touched, setTouched] = useState<boolean>(false);
   const [isSign, setIsSign] = useState<any>(false);
   const inputRef = useRef<any>();
-  // const {
-  //   getValues,
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm({
-  //   resolver: yupResolver(schema),
-  // });
 
   const onCheck = async () => {
     setTouched(true);
-    try {
     await fetch('http://dev.inyro.site/api/v1/admins/login', {
       method: 'POST',
       headers: {
@@ -44,20 +34,16 @@ const SignUp = () => {
       },
       body: nickname,
     })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      if(data?.isSuccess) {
-        setIsSign(false)
-        setIsId(false);
-      } else {
-        setIsSign(true)
-        setIsId(true);
-      }
+      .then((response) => response.json())
+      .then((data) => {
+        if (data?.isSuccess) {
+          setIsSign(false);
+          setIsId(false);
+        } else {
+          setIsSign(true);
+          setIsId(true);
+        }
       });
-
-    } catch {
-    }
   };
 
   const onclickSignUp = async () => {
@@ -68,9 +54,32 @@ const SignUp = () => {
           'Content-Type': 'application/json',
         },
         body: nickname,
-      }).then(() => {
-        router.push('/main');
-      });
+      })
+        .then((response) => response.json())
+        .then(async (datadata) => {
+          const invitationId = localStorage.getItem('invitationId');
+          if (invitationId) {
+            await fetch(`https://dev.inyro.site/api/v1/guests/join`, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+              body: JSON.stringify({
+                houseId: invitationId,
+                guestName: nickname,
+              }),
+            });
+            localStorage.setItem('uuid', nickname);
+            localStorage.removeItem('invitationId');
+            router.push(`/room/${invitationId}`);
+            return;
+          }
+          if (datadata?.isSuccess) {
+            localStorage.setItem('uuid', nickname);
+            router.push('/main');
+            return;
+          }
+        });
       // .catch(() => {});
     } catch {
       setIsId(true);
@@ -109,6 +118,12 @@ const SignUp = () => {
         ) : (
           <></>
         )}
+        <Link
+          style={{ fontSize: '14px', textAlign: 'center', marginTop: '8px', color: '#424242' }}
+          href={'/auth/sign-up'}
+        >
+          로그인하러가기
+        </Link>
       </ContentBox>
       <Button buttonContent={`가입하기`} onClick={handleClick}></Button>
     </Container>

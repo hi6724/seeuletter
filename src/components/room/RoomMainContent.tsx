@@ -8,19 +8,35 @@ import d2Img from '@/assets/rooms/d-2.png';
 import d3Img from '@/assets/rooms/d-3.png';
 import d4Img from '@/assets/rooms/d-4.png';
 import d5Img from '@/assets/rooms/d-5.png';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const IMG_LIST = [openedImg, d1Img, d2Img, d3Img, d4Img, d5Img];
 
 function RoomMainContent({ roomData }: any) {
+  const pathname = usePathname();
+
   const router = useRouter();
-  const handleClick = (data: { openDate: number; roomId: string }) => {
-    if (data.openDate === 0) router.push(`/card/${data.roomId}`);
-    else alert('아직 열 수 없습니다');
+  const handleClick = (data: { headCount: number; openDate: number; roomId: string }) => {
+    if (data.headCount === 0) {
+      alert('인원이 없습니다');
+      return;
+    }
+    if (data.openDate === 0) {
+      router.push(`${pathname}/chat/${data.roomId}`);
+    } else alert('아직 열 수 없습니다');
   };
-  console.log(roomData);
+
+  const handleClickCopy = () => {
+    const textArea = document.createElement('textarea');
+    textArea.value = `https://45d1-220-117-166-129.ngrok-free.app/invitation/${pathname.split('/')[2]}`;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    alert('복사되었습니다');
+  };
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <Header roomData={roomData} />
       <MainContent>
         <Row>
@@ -40,10 +56,12 @@ function RoomMainContent({ roomData }: any) {
       </MainContent>
       <Background src={bg.src} alt="" />
       <Clipboard>
-        <div>여기 주소</div>
-        <button>복사</button>
+        <div className="wrapper">
+          <div className="srctext">https://45d1-220-117-166-129.ngrok-free.app/invitation/{pathname.split('/')[2]}</div>
+        </div>
+        <button onClick={handleClickCopy}>복사하기</button>
       </Clipboard>
-    </>
+    </div>
   );
 }
 
@@ -52,6 +70,34 @@ const Clipboard = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 19;
+  position: fixed;
+  bottom: 16px;
+  width: 90%;
+  left: 5%;
+  background-color: #fff;
+  .srctext {
+    white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    overflow-y: hidden; /* 세로 스크롤 비활성화 */
+    max-width: 250px;
+  }
+  button {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    width: 100%;
+    display: flex;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex: 1 0 0;
+    align-self: stretch;
+    background-color: #222f40;
+    color: #fff;
+  }
 `;
 const Row = styled.div`
   display: flex;
@@ -65,13 +111,13 @@ const Window = styled.div`
   display: flex;
   justify-content: center;
   img {
-    width: 30vw;
+    width: min(30vw, 163px);
   }
 `;
 
 const MainContent = styled.div`
   padding-top: 75vw;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -80,11 +126,11 @@ const MainContent = styled.div`
 `;
 
 const Background = styled.img`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 0;
-  width: 100vw;
+  width: min(100vw, 500px);
 `;
 
 function formatDate(dateString: string) {
@@ -116,7 +162,7 @@ function Header({ roomData }: any) {
 }
 
 const HeaderContainer = styled.div`
-  position: fixed;
+  position: absolute;
   top: 10vw;
   z-index: 9;
   color: white;
