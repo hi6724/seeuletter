@@ -22,7 +22,7 @@ export default function Transition({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     const invitationId = pathname.includes('invitation') ? pathname.split('/')[2] : null;
-    if (!invitationId && !uuid) {
+    if (!invitationId && !uuid && pathname !== '/auth/sign-up' && pathname !== '/auth/sign-in') {
       router.push('/auth/sign-up');
     }
   }, [uuid]);

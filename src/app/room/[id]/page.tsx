@@ -1,17 +1,8 @@
+import RoomMainContent from '@/components/room/RoomMainContent';
 import { Metadata } from 'next';
-import Link from 'next/link';
-
-const DUMMY_DATA = {
-  title: 'DUMMY TITLE',
-  total_date: 10,
-};
 
 async function fetchRoomData(id: string) {
-  const isDev = process.env.NODE_ENV === 'development';
-  if (isDev) return DUMMY_DATA;
-
-  const baseURL = new URL('/api/room');
-  baseURL.searchParams.append('id', id);
+  const baseURL = new URL(`https://dev.inyro.site/api/v1/houses/${id}`);
   const res = await fetch(baseURL);
   const data = await res.json();
   return data;
@@ -21,18 +12,7 @@ async function RoomPage({ params: { id } }: { params: { id: string } }) {
   const roomData = await fetchRoomData(id);
   return (
     <div>
-      RoomPage <span>{id}</span>
-      <h1>{roomData?.title ?? 'No Title Error'}</h1>
-      <div>
-        {Array.from({ length: 5 }).map((el: any, i: number) => (
-          <Link href={`/card/${id}`} key={i}>
-            <div>
-              {el}
-              {'하이하이'}
-            </div>
-          </Link>
-        ))}
-      </div>
+      <RoomMainContent roomData={roomData} />
     </div>
   );
 }
