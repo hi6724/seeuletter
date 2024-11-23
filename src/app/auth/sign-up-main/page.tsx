@@ -12,7 +12,7 @@ const SignUp = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    if(isSign) {
+    if (isSign) {
       onclickSignUp();
     } else {
       inputRef.current.focus();
@@ -36,27 +36,25 @@ const SignUp = () => {
   const onCheck = async () => {
     setTouched(true);
     try {
-    await fetch('http://dev.inyro.site/api/v1/admins/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: nickname,
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      if(data?.isSuccess) {
-        setIsSign(false)
-        setIsId(false);
-      } else {
-        setIsSign(true)
-        setIsId(true);
-      }
-      });
-
-    } catch {
-    }
+      await fetch('http://dev.inyro.site/api/v1/admins/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: nickname,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data?.isSuccess) {
+            setIsSign(false);
+            setIsId(false);
+          } else {
+            setIsSign(true);
+            setIsId(true);
+          }
+        });
+    } catch {}
   };
 
   const onclickSignUp = async () => {

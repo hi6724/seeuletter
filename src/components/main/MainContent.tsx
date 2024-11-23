@@ -16,7 +16,7 @@ const MainContent = () => {
   };
 
   return (
-    <div>
+    <MainContainer>
       <TopContainer>
         <UserNameStyle>
           {userName}님, <br />
@@ -29,11 +29,13 @@ const MainContent = () => {
         <Groups />
       </GroupContainer>
       <Button buttonContent={'방 만들기'} onClick={handleClickCreateRoom} buttonColor="#D9621F" />
-    </div>
+    </MainContainer>
   );
 };
 
 export default MainContent;
+
+const MainContainer = styled.div``;
 
 const TopContainer = styled.div`
   width: 100%;

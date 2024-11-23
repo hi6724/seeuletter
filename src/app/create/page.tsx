@@ -12,12 +12,13 @@ const CreateRoom = () => {
   const [groupName, setGroupName] = useState('');
   const [locationName, setLocationName] = useState('');
   const [selectedDate, setSelectedDate] = useState(''); // 선택한 날짜 상태 추가
-
   const router = useRouter();
 
   const handleClickPrev = () => {
     router.push('/main');
   };
+
+  const isButtonDisabled = !groupName || !locationName || !selectedDate;
 
   useEffect(() => {
     const userUuid = localStorage.getItem('uuid');
@@ -71,7 +72,7 @@ const CreateRoom = () => {
         <InputTitle>날짜</InputTitle>
         <CalendarWrap onDateChange={handleDataChange} />
       </CalendarContainer>
-      <Button buttonContent={'다음으로'} onClick={handleClickNext} />
+      <Button buttonContent={'다음으로'} onClick={handleClickNext} disabled={isButtonDisabled} />
     </CreateRoomContainer>
   );
 };
