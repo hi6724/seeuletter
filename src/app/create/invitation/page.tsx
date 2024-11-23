@@ -1,7 +1,7 @@
 'use client';
 
 // import { Metadata } from 'next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GridInvitation from '@/components/create/invitation/GridInvitation';
 import TextArea from '@/components/create/invitation/TextArea';
 import Button from '@/components/common/Button';
@@ -10,7 +10,7 @@ import Header from '@/components/common/Header';
 import styled from 'styled-components';
 
 function CreateInvitationPage() {
-  const [isImageSelected, setIsImageSelected] = useState(false);
+  const [isImageSelected, setIsImageSelected] = useState(true);
   const [textareaContent, setTextareaContent] = useState('');
 
   const router = useRouter();
@@ -23,6 +23,10 @@ function CreateInvitationPage() {
     setIsImageSelected(true);
     localStorage.setItem('imageNumber', JSON.stringify(imageNumber)); // 이미지 번호 저장
   };
+
+  useEffect(() => {
+    const imageNumber = localStorage.setItem('imageNumber', 1);
+  }, []);
 
   const handleTextArea = (content: string) => {
     setTextareaContent(content);
