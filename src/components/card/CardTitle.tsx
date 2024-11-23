@@ -41,6 +41,8 @@ function CardTitle({ indexState, letterList }: any) {
 export default CardTitle;
 
 const Container = styled.div`
+  margin-top: 13px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   padding: 10px 0;

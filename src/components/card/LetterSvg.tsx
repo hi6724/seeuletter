@@ -1,8 +1,8 @@
 import React from 'react';
 
-function LetterSvg({ color }: { color: string }) {
+function LetterSvg({ ...rest }: any) {
   return (
-    <svg width="320" height="241" viewBox="0 0 320 241" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="640" height="482" viewBox="0 0 320 241" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
       <path
         d="M0 226.526V67.4285C0 67.4285 20.8074 55.2728 34.5 48.1517C79.2954 24.8551 104.017 0.913931 154.5 0.0257427C204.208 -0.848795 229.83 20.7044 274.5 42.5257C292.701 51.4167 320 67.4285 320 67.4285V226.526H0Z"
         fill="#C0561A"
