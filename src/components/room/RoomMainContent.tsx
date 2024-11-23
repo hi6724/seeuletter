@@ -16,7 +16,7 @@ function RoomMainContent({ roomData }: any) {
   const router = useRouter();
   const handleClick = (data: { openDate: number; roomId: string }) => {
     if (data.openDate === 0) router.push(`/card/${data.roomId}`);
-    alert('아직 열 수 없습니다');
+    else alert('아직 열 수 없습니다');
   };
   console.log(roomData);
   return (
