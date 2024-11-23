@@ -1,23 +1,35 @@
 'use client';
 import styled from 'styled-components';
-import inviteImage1 from '../../../assets/inviteImage.png';
+import inviteImage1 from '../../../assets/invite1.svg';
+import inviteImage2 from '../../../assets/invite2.svg';
+import inviteImage3 from '../../../assets/invite3.svg';
+import { useState } from 'react';
 
-function GridInvitation() {
+interface GridInvitationProps {
+  onImageSelect: (imageNumber: number) => void;
+}
+
+function GridInvitation({ onImageSelect }: GridInvitationProps) {
+  const [selectedImageId, setSelectedImageId] = useState(1);
   const images = [
     { id: 1, src: inviteImage1.src, alt: 'Invite Image 1' },
-    { id: 2, src: inviteImage1.src, alt: 'Invite Image 2' },
-    { id: 3, src: inviteImage1.src, alt: 'Invite Image 3' },
+    { id: 2, src: inviteImage2.src, alt: 'Invite Image 2' },
+    { id: 3, src: inviteImage3.src, alt: 'Invite Image 3' },
   ];
 
-  const handleImageClick = (imageId: number) => {
-    localStorage.setItem('imageNumber', JSON.stringify(imageId));
-    console.log(`Image ${imageId} selected`);
+  const handleImageClick = (imageNumber: number) => {
+    setSelectedImageId(imageNumber);
+    onImageSelect(imageNumber);
   };
 
   return (
     <Container>
       {images.map((image) => (
-        <ImageWrapper key={image.id} onClick={() => handleImageClick(image.id)}>
+        <ImageWrapper
+          key={image.id}
+          onClick={() => handleImageClick(image.id)}
+          selectedImageId={selectedImageId === image.id}
+        >
           <StyledImage src={image.src} alt={image.alt} />
         </ImageWrapper>
       ))}
@@ -35,14 +47,15 @@ const Container = styled.div`
   margin-bottom: 32px;
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.div<{ selectedImageId: boolean }>`
   position: relative;
   overflow: hidden;
-  border-radius: 8px; /* 선택 사항 */
+  border-radius: 8px;
+  border: 5px solid ${({ selectedImageId }) => (selectedImageId ? '#222F40' : 'transparent')};
 `;
 
 const StyledImage = styled.img`
-  width: 100%; /* 너비를 컨테이너에 맞춤 */
-  height: auto; /* 이미지 비율 유지 */
-  object-fit: contain; /* 이미지 비율 유지하며 영역 내에 맞춤 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
