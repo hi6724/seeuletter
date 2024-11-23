@@ -8,7 +8,7 @@ interface ButtonContentProps {
 const Button = ({ buttonContent }: ButtonContentProps) => {
   return (
     <NextButtonContainer>
-      <NextButton>{buttonContent}</NextButton>
+      <NextButton >{buttonContent}</NextButton>
     </NextButtonContainer>
   );
 };
