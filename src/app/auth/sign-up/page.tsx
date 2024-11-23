@@ -39,12 +39,6 @@ const SignUp = () => {
       body: data.nickname,
     })
       .then((response) => response.json())
-<<<<<<< HEAD
-      .then((datadata) => {
-        console.log(datadata);
-        if (datadata?.isSuccess) {
-          localStorage.setItem('uuid', data.nickname);
-=======
       .then(async (datadata) => {
         if (datadata?.isSuccess) {
           const invitationId = localStorage.getItem('invitationId');
@@ -64,7 +58,6 @@ const SignUp = () => {
             router.push(`/room/${invitationId}`);
             return;
           }
->>>>>>> afe1bb67f845673ea2c86f2ea274bc79d64b9057
           handleToMain();
         } else {
           setTouched(true);
