@@ -21,7 +21,6 @@ function RoomMainContent({ roomData }: any) {
       router.push(`${pathname}/chat/${data.roomId}`);
     } else alert('아직 열 수 없습니다');
   };
-  console.log(roomData);
   return (
     <>
       <Header roomData={roomData} />
