@@ -23,7 +23,7 @@ function CardTitle({ indexState, letterList }: any) {
         <LeftArrow />
       </CircleButton>
       <motion.div
-        key={currentLetter?.username} // key 변경으로 애니메이션 트리거
+        key={index} // key 변경으로 애니메이션 트리거
         initial={{ opacity: 0, y: 10 }} // 초기 상태
         animate={{ opacity: 1, y: 0 }} // 애니메이션 상태
         transition={{ duration: 0.3 }} // 애니메이션 지속 시간
