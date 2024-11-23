@@ -13,7 +13,11 @@ import { useState } from 'react';
 const SignUp = () => {
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleToSign = () => {
+    router.push('/auth/sign-up-main');
+  };
+
+  const handleToMain = () => {
     router.push('/main');
   };
 
@@ -35,7 +39,7 @@ const SignUp = () => {
       },
       body: data.nickname,
     })
-      .then((response) => { localStorage.setItem('uuid', data.nickname); handleClick();})
+      .then((response) => { localStorage.setItem('uuid', data.nickname); handleToMain();})
       .catch((error) => console.log('error:', error));
   };
 
@@ -50,7 +54,7 @@ const SignUp = () => {
             {/* <AlertPTag>사용가능한 닉네임입니다.</AlertPTag> */}
           </div>
           <StartButton type="submit">지금 시작할게요</StartButton>
-          <CreateAccountButton onClick={handleClick}>계정 생성하기 &gt; </CreateAccountButton>
+          <CreateAccountButton onClick={handleToSign}>계정 생성하기 &gt; </CreateAccountButton>
         </OverlayDiv>
       </Container>
     </form>
