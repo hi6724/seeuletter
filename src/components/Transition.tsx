@@ -24,6 +24,10 @@ export default function Transition({ children }: { children: React.ReactNode }) 
     const invitationId = pathname.includes('invitation') ? pathname.split('/')[2] : null;
     if (!invitationId && !uuid && pathname !== '/auth/sign-up' && pathname !== '/auth/sign-in') {
       router.push('/auth/sign-up');
+      return;
+    }
+    if (uuid && (pathname === '/auth/sign-up' || pathname === '/auth/sign-in')) {
+      router.replace('/main');
     }
   }, [uuid]);
 

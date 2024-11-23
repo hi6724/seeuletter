@@ -28,7 +28,7 @@ function CardTitle({ indexState, letterList }: any) {
         animate={{ opacity: 1, y: 0 }} // 애니메이션 상태
         transition={{ duration: 0.3 }} // 애니메이션 지속 시간
       >
-        <StyledCardTitle>To.{currentLetter?.username}</StyledCardTitle>
+        <StyledCardTitle>To.{currentLetter?.guest}</StyledCardTitle>
         <SecondaryText>{`(${index + 1}/${letterList.length})`}</SecondaryText>
       </motion.div>
       <CircleButton onClick={() => handleClick('next')}>
