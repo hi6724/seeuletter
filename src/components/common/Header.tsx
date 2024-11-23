@@ -11,7 +11,7 @@ const Header = ({ headerTitle }: HeaderProps) => {
     <div>
       <CreateRoomTitle>
         <img src={backIcon.src} alt="backIcon" />
-        <div>{headerTitle}</div>
+        <TitleStyle>{headerTitle}</TitleStyle>
       </CreateRoomTitle>
     </div>
   );
@@ -20,6 +20,15 @@ const Header = ({ headerTitle }: HeaderProps) => {
 export default Header;
 
 const CreateRoomTitle = styled.div`
+  position: relative;
+  height: 52px;
   display: flex;
   align-items: center;
+  padding: 0 16px;
+`;
+
+const TitleStyle = styled.div`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 `;
