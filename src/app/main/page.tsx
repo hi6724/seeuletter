@@ -15,13 +15,20 @@ const CreateRoom = () => {
     router.push('/create');
   };
 
+  const handleLogout = () => {
+    router.push('/auth/sign-up');
+    localStorage.removeItem('uuid')
+  }
   return (
     <div>
       <TopContainer>
-        <UserNameStyle>
-          {userName}님, <br />
-          따뜻한 연말모임 시작할까요?
-        </UserNameStyle>
+        <TopDiv>
+          <UserNameStyle>
+            {userName}님, <br />
+            따뜻한 연말모임 시작할까요?
+          </UserNameStyle>
+          <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+        </TopDiv>
         <CommentStyle>따뜻한 한마디</CommentStyle>
         <CharacterImg src={snowmanImg.src} alt="character" />
       </TopContainer>
@@ -72,3 +79,16 @@ const GroupContainer = styled.div`
   z-index: 1;
   margin-top: -38px;
 `;
+
+const LogoutButton = styled.button`
+  background-color: white;
+  height: 25px;
+  border: 0px;
+  border-radius: 10px;
+`;
+const TopDiv = styled.div`
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding-right : 30px;
+`
