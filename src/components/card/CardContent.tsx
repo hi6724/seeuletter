@@ -1,18 +1,19 @@
 'use client';
 
-function CardContent({ data }: any) {
+import { useState } from 'react';
+import CardTitle from './CardTitle';
+
+function CardContent({ letterList }: any) {
+  const [index, setIndex] = useState(0);
+  const currentLetter = letterList[index];
   return (
     <div>
-      <h1>{data?.username}</h1>
-      <h2>{data?.username}님에게 편지를 작성해주세요!</h2>
-      <div>
-        {data?.letters?.map((el: any, i: number) => (
-          <div key={i}>
-            <h3>{el.username}</h3>
-            <p>{el.content}</p>
-          </div>
-        ))}
-      </div>
+      <CardTitle indexState={[index, setIndex]} letterList={letterList} />
+      <button onClick={() => setIndex(index - 1)}>-</button>
+      <button onClick={() => setIndex(index + 1)}>+</button>
+      <h1>{currentLetter?.username}</h1>
+      <h2>{currentLetter?.username}님에게 편지를 작성해주세요!</h2>
+      <div></div>
       <button>편지쓰기</button>
     </div>
   );

@@ -34,9 +34,7 @@ async function CardPage({ params: { id } }: { params: { id: string } }) {
   const chatListData = await fetchChatData(id);
   return (
     <div>
-      {chatListData.map((el: any, i: number) => (
-        <CardContent key={i} data={el} />
-      ))}
+      <CardContent letterList={chatListData} />
     </div>
   );
 }
