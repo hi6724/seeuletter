@@ -12,7 +12,7 @@ function CardContent({ letterList }: any) {
     <>
       <div>
         <CardTitle indexState={[index, setIndex]} letterList={letterList} />
-        <Letter indexState={[index, setIndex]} letterList={letterList} />
+        <Letter popupState={[showPopup, setShowPopup]} indexState={[index, setIndex]} letterList={letterList} />
         <PopupBtn
           style={{
             zIndex: 9,
@@ -23,20 +23,23 @@ function CardContent({ letterList }: any) {
             transform: 'translateX(-50%)',
             width: 'calc(100% - 32px)',
           }}
-          onClick={() => setShowPopup(!showPopup)}
+          onClick={() => setShowPopup(true)}
         >
           편지쓰기
         </PopupBtn>
       </div>
-      {showPopup && <Popup letterList={letterList} index={index} setShowPopup={setShowPopup} />}
+      {showPopup && <Popup letterList={letterList} index={index} popupState={[showPopup, setShowPopup]} />}
     </>
   );
 }
 
 export default CardContent;
 
-function Popup({ setShowPopup, letterList, index }: any) {
+function Popup({ popupState, letterList, index }: any) {
+  const [popupData, setShowPopup] = popupState;
   const currentLetter = letterList[index];
+  const isNewLetter = popupData === true;
+  console.log(popupData);
   return (
     <>
       <PopupContainer>
@@ -47,23 +50,24 @@ function Popup({ setShowPopup, letterList, index }: any) {
               <path
                 d="M18 6.06567L6 18.0657"
                 stroke="#333D4B"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M6 6.06567L18 18.0657"
                 stroke="#333D4B"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </button>
         </PopupHeader>
-        <StyledTextArea placeholder="내용을 입력해주세요" />
-        <PopupFooter>From. 재민</PopupFooter>
-        <PopupBtn onClick={() => setShowPopup(false)}>전송하기</PopupBtn>
+        {isNewLetter && <StyledTextArea placeholder="내용을 입력해주세요" />}
+        {!isNewLetter && <StyledContentDiv>{popupData?.content}</StyledContentDiv>}
+        <PopupFooter>From. {isNewLetter ? '' : popupData?.username}</PopupFooter>
+        {isNewLetter && <PopupBtn onClick={() => setShowPopup(false)}>전송하기</PopupBtn>}
       </PopupContainer>
       <Background />
     </>
@@ -111,6 +115,19 @@ const PopupContainer = styled.div`
   background-color: white;
   border-radius: 12px;
   flex-direction: column;
+`;
+
+const StyledContentDiv = styled.div`
+  margin-top: 8px;
+  display: flex;
+  height: 50%;
+  min-width: 200px;
+  padding: 16px 12px;
+  width: calc(100% - 24px);
+
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
 `;
 
 const StyledTextArea = styled.textarea`
