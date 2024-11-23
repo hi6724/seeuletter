@@ -16,8 +16,40 @@ function CreateInvitationPage() {
     router.push('/create/');
   };
 
-  const handleClickNext = () => {
-    router.push('');
+  const handleClickNext = async () => {
+    const storedRoomData = localStorage.getItem('roomData');
+    const roomData = storedRoomData ? JSON.parse(storedRoomData) : {};
+    const imageNumber = parseInt(localStorage.getItem('imageNumber') || '0', 10); // 문자열을 숫자로 변환
+    const content = localStorage.getItem('content') || '';
+
+    const requestData = {
+      ...roomData,
+      imageNumber,
+      content,
+    };
+
+    try {
+      const response = await fetch('https://dev.inyro.site/api/v1/houses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+      if (response.ok) {
+        const result = await response.json();
+        const houseId = result.result.houseId;
+
+        console.log('houseId:', houseId);
+        if (result.result.houseId) {
+          router.push(`/room/${houseId}`);
+        }
+
+        // router.push('/room');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (

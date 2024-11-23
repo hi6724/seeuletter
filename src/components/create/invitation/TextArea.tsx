@@ -1,12 +1,20 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function TextArea() {
+  const [content, setContent] = useState('');
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
+    localStorage.setItem('content', e.target.value);
+    console.log('content');
+  };
+
   return (
     <div>
       <TextAreaTitle>내용</TextAreaTitle>
-      <StyledTextArea />
+      <StyledTextArea onChange={handleContentChange} />
     </div>
   );
 }

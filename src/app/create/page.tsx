@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CalendarWrap from '../../components/create/CalendarWrap';
 import styled from 'styled-components';
 import Header from '@/components/common/Header';
@@ -8,6 +8,7 @@ import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 
 const CreateRoom = () => {
+  const [userName, setUserName] = useState('');
   const [groupName, setGroupName] = useState('');
   const [locationName, setLocationName] = useState('');
   const [selectedDate, setSelectedDate] = useState(''); // 선택한 날짜 상태 추가
@@ -18,7 +19,25 @@ const CreateRoom = () => {
     router.push('/main');
   };
 
+  useEffect(() => {
+    const userUuid = localStorage.getItem('uuid');
+    if (userUuid) {
+      setUserName(userUuid);
+      console.log('uuid: ', userUuid);
+    } else {
+      console.warn('uuid가 로컬 스토리지에 존재하지 않습니다.');
+    }
+  }, []);
+
   const handleClickNext = () => {
+    const roomData = {
+      groupName: groupName,
+      location: locationName,
+      date: selectedDate,
+      ownerName: userName,
+    };
+
+    localStorage.setItem('roomData', JSON.stringify(roomData));
     router.push('/create/invitation');
   };
 
@@ -33,11 +52,19 @@ const CreateRoom = () => {
       <InputContainer>
         <InputItemWrapper>
           <InputTitle>모임 이름</InputTitle>
-          <InputStyle type="text" placeholder="8자 이내로 작성해주세요" />
+          <InputStyle
+            onChange={(e) => setGroupName(e.target.value)}
+            type="text"
+            placeholder="8자 이내로 작성해주세요"
+          />
         </InputItemWrapper>
         <InputItemWrapper>
           <InputTitle>장소</InputTitle>
-          <InputStyle type="text" placeholder="8자 이내로 작성해주세요" />
+          <InputStyle
+            onChange={(e) => setLocationName(e.target.value)}
+            type="text"
+            placeholder="8자 이내로 작성해주세요"
+          />
         </InputItemWrapper>
       </InputContainer>
       <CalendarContainer>
