@@ -68,7 +68,7 @@ const SignUp = () => {
               method: 'POST',
               body: JSON.stringify({
                 houseId: invitationId,
-                guestName: nickname,
+                guestName: nickname,  
               }),
               cache: 'no-cache',
             });
