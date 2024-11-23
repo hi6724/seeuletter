@@ -1,30 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import rightArrow from '../../assets/rightArrow.svg';
 import styled from 'styled-components';
+import Link from 'next/link';
 
-interface GroupsProps {
-  userName: string;
+function formatDate(dateString: string) {
+  // 문자열을 Date 객체로 변환
+  const date = new Date(dateString);
+  const now = new Date();
+
+  // 월(month)과 날짜(day)
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  // 년도 비교
+  const year = date.getFullYear();
+  const currentYear = now.getFullYear();
+
+  // 년도가 다르면 년도 포함
+  return year !== currentYear ? `${year}년 ${month}월${day}일` : `${month}월${day}일`;
 }
 
-const Groups = ({ userName }: GroupsProps) => {
+async function fetchGroups(username: string) {
+  const baseUrl = `https://dev.inyro.site/api/v1/houses?nickname=${username}`;
+  const response = await fetch(baseUrl);
+  const data = await response.json();
+  return data;
+}
+
+const Groups = () => {
+  const [groups, setGroups] = useState([]);
+  const userName = typeof window !== 'undefined' ? (localStorage.getItem('uuid') as string) : '';
+
+  useEffect(() => {
+    fetchGroups(userName).then((data) => {
+      setGroups(data?.result?.houses);
+    });
+  }, [userName]);
+
+  console.log(groups);
+
   return (
     <GroupsContainer>
       <UserTitle>{userName} 님의 모임</UserTitle>
-      <GroupItem>
-        <DateWrap>11월 20일</DateWrap>
-        <RoomName>방 제목방 제목방</RoomName>
-        <img src={rightArrow.src} alt="rightArrow" />
-      </GroupItem>
-      <GroupItem>
-        <DateWrap>11월 20일</DateWrap>
-        <RoomName>방 제목</RoomName>
-        <img src={rightArrow.src} alt="rightArrow" />
-      </GroupItem>
-      <GroupItem>
-        <DateWrap>11월 20일</DateWrap>
-        <RoomName>방 제목</RoomName>
-        <img src={rightArrow.src} alt="rightArrow" />
-      </GroupItem>
+      {groups?.map((group: any) => (
+        <GroupItem key={group?.houseId} href={`/room/${group?.houseId}`}>
+          <DateWrap>{formatDate(group?.date)}</DateWrap>
+          <RoomName>{group.name}</RoomName>
+          <img src={rightArrow.src} alt="rightArrow" />
+        </GroupItem>
+      ))}
     </GroupsContainer>
   );
 };
@@ -45,13 +69,14 @@ const UserTitle = styled.div`
   padding: 16px 0 8px 16px;
 `;
 
-const GroupItem = styled.div`
+const GroupItem = styled(Link)`
   box-sizing: border-box;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #eee;
   margin: 0px 16px;
   padding: 8px 0;
+  text-decoration: none;
 
   img {
     cursor: pointer;
