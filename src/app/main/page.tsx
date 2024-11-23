@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import characterImage from '../../assets/character.png';
+import snowmanImg from '../../assets/snowman.svg';
 import styled from 'styled-components';
 import Groups from '@/components/main/groups';
 import Button from '@/components/common/Button';
@@ -23,12 +23,12 @@ const CreateRoom = () => {
           따뜻한 연말모임 시작할까요?
         </UserNameStyle>
         <CommentStyle>따뜻한 한마디</CommentStyle>
-        <CharacterImg src={characterImage.src} alt="character" />
+        <CharacterImg src={snowmanImg.src} alt="character" />
       </TopContainer>
       <GroupContainer>
         <Groups userName={userName} />
       </GroupContainer>
-      <Button buttonContent={'방 만들기'} onClick={handleClickCreateRoom} />
+      <Button buttonContent={'방 만들기'} onClick={handleClickCreateRoom} buttonColor="#D9621F" color="white" />
     </div>
   );
 };
@@ -38,7 +38,7 @@ export default CreateRoom;
 const TopContainer = styled.div`
   width: 100%;
   height: 205px;
-  background-color: #445e13;
+  background-color: #222f40;
   position: relative;
   z-index: 0;
 `;
@@ -62,10 +62,9 @@ const CommentStyle = styled.div`
 
 const CharacterImg = styled.img`
   position: absolute;
+  top: 78px;
   right: 0;
-  bottom: 0;
   padding-right: 20px;
-  padding-bottom: 28px;
 `;
 
 const GroupContainer = styled.div`

@@ -52,6 +52,10 @@ const GroupItem = styled.div`
   border-bottom: 1px solid #eee;
   margin: 0px 16px;
   padding: 8px 0;
+
+  img {
+    cursor: pointer;
+  }
 `;
 
 const DateWrap = styled.div`
@@ -77,5 +81,3 @@ const RoomName = styled.div`
   font-weight: 400;
   flex-grow: 1;
 `;
-
-const RightArrowIcon = styled.img``;

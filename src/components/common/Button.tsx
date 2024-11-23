@@ -4,12 +4,38 @@ import styled from 'styled-components';
 interface ButtonContentProps {
   buttonContent: string;
   onClick: () => void;
+  buttonColor?: string;
+  // activeColor?: string;
+  // isActive?: boolean;
+  // color?: string;
 }
 
-const Button = ({ buttonContent, onClick }: ButtonContentProps) => {
+// interface StyledButtonProps {
+//   buttonColor?: string;
+//   activeColor?: string;
+//   isActive?: boolean;
+//   color?: string;
+// }
+
+const Button = ({
+  buttonContent,
+  onClick,
+}: // buttonColor = '#e0e0e0',
+// activeColor = '#222f40',
+// color = 'fff',
+// isActive,
+ButtonContentProps) => {
   return (
     <NextButtonContainer>
-      <NextButton onClick={onClick}>{buttonContent}</NextButton>
+      <NextButton
+        // buttonColor={buttonColor}
+        // activeColor={activeColor}
+        // isActive={isActive}
+        // color={color}
+        onClick={onClick}
+      >
+        {buttonContent}
+      </NextButton>
     </NextButtonContainer>
   );
 };
@@ -38,8 +64,8 @@ const NextButton = styled.div`
   margin-top: 16px;
   box-sizing: border-box;
   text-align: center;
-  color: var(--M3-sys-light-on-surface, var(--Schemes-On-Surface, #1d1b20));
-  background: var(--GreyScale-Grey-300, #e0e0e0);
+  color: white;
+  background: #d9621f;
   border-radius: 9000px;
   cursor: pointer;
 `;

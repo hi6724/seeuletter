@@ -5,13 +5,19 @@ import styled from 'styled-components';
 function TextArea() {
   return (
     <div>
-      <div>내용</div>
+      <TextAreaTitle>내용</TextAreaTitle>
       <StyledTextArea />
     </div>
   );
 }
 
 export default TextArea;
+
+const TextAreaTitle = styled.div`
+  color: var(--sds-color-text-default-default);
+  font-size: 14px;
+  font-weight: 400;
+`;
 
 const StyledTextArea = styled.textarea`
   margin-top: 8px;
