@@ -7,6 +7,67 @@ const DUMMY_DATA = [
     username: '엘빈',
     letters: [
       {
+        username: '엘빈엘빈엘빈엘빈엘빈엘빈엘빈',
+        content:
+          '안녕하세요 편지좀 써주세요 ㅠㅠ안녕하세요 편지좀 써주세요 ㅠㅠ안녕하세요 편지좀 써주세요 ㅠㅠ안녕하세요 편지좀 써주세요 ㅠㅠ안녕하세요 편지좀 써주세요 ㅠㅠ안녕하세요 편지좀 써주세요 ㅠㅠ안녕하세요 편지좀 써주세요 ㅠㅠ안녕하세요 편지좀 써주세요 ㅠㅠ안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
+        username: '엘빈',
+        content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
+      },
+      {
         username: '엘빈',
         content: '안녕하세요 편지좀 써주세요 ㅠㅠ',
       },
@@ -33,10 +94,8 @@ async function fetchChatData(id: string) {
 async function CardPage({ params: { id } }: { params: { id: string } }) {
   const chatListData = await fetchChatData(id);
   return (
-    <div>
-      {chatListData.map((el: any, i: number) => (
-        <CardContent key={i} data={el} />
-      ))}
+    <div style={{ padding: '0 16px 150px 16px', overflow: 'hidden', minHeight: '100vh' }}>
+      <CardContent letterList={chatListData} />
     </div>
   );
 }

@@ -9,12 +9,22 @@ import moment from 'moment';
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const CalendarWrap = () => {
+interface CalendarWrapProps {
+  onDateChange: (date: string) => void;
+}
+
+const CalendarWrap = ({ onDateChange }: CalendarWrapProps) => {
   const today = new Date();
   const [date, setDate] = useState<Value>(today);
 
   const handleDateChange = (newDate: Value) => {
     setDate(newDate);
+    console.log(newDate);
+
+    if (newDate instanceof Date) {
+      const formattedDate = moment(newDate).format('YYYY-MM-DD');
+      onDateChange(formattedDate);
+    }
   };
 
   return (
@@ -49,6 +59,40 @@ const StyledCalendarWrapper = styled.div`
   .react-calendar__month-view__weekdays abbr {
     text-decoration: none;
     font-weight: 800;
+  }
+
+  //day 타일 한개 커스텀
+  .react-calendar__tile {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+    // 주말 글씨 빨간색 없애기
+    color: var(--festie-gray-800, #3a3a3a);
+  }
+
+  //오늘 날짜 커스텀
+  .react-calendar__tile--now {
+    background: #788ca7 !important; /* 강제 적용 */
+    color: black !important;
+  }
+  .react-calendar__tile--now:enabled:hover,
+  .react-calendar__tile--now:enabled:focus {
+    background: #788ca7;
+    color: ;
+  }
+
+  .react-calendar__tile--active {
+    color: white;
+    background-color: #222f40;
+  }
+
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    background-color: #222f40;
+    color: white;
   }
 `;
 

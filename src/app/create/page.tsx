@@ -1,14 +1,35 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import CalendarWrap from '../../components/create/CalendarWrap';
 import styled from 'styled-components';
 import Header from '@/components/common/Header';
 import Button from '@/components/common/Button';
+import { useRouter } from 'next/navigation';
+
 const CreateRoom = () => {
+  const [groupName, setGroupName] = useState('');
+  const [locationName, setLocationName] = useState('');
+  const [selectedDate, setSelectedDate] = useState(''); // 선택한 날짜 상태 추가
+
+  const router = useRouter();
+
+  const handleClickPrev = () => {
+    router.push('/main');
+  };
+
+  const handleClickNext = () => {
+    router.push('/create/invitation');
+  };
+
+  const handleDataChange = (data: string) => {
+    setSelectedDate(data);
+    console.log('selectData', selectedDate);
+  };
+
   return (
     <CreateRoomContainer>
-      <Header headerTitle="방 만들기" />
+      <Header headerTitle="방 만들기" onClick={handleClickPrev} />
       <InputContainer>
         <InputItemWrapper>
           <InputTitle>모임 이름</InputTitle>
@@ -21,9 +42,9 @@ const CreateRoom = () => {
       </InputContainer>
       <CalendarContainer>
         <InputTitle>날짜</InputTitle>
-        <CalendarWrap />
+        <CalendarWrap onDateChange={handleDataChange} />
       </CalendarContainer>
-      <Button buttonContent={'다음으로'} />
+      <Button buttonContent={'다음으로'} onClick={handleClickNext} />
     </CreateRoomContainer>
   );
 };
@@ -65,6 +86,7 @@ const InputStyle = styled.input`
   border: 1px solid #bdbdbd;
   border-radius: 8px;
   padding: 10px 16px;
+  outline: none;
 
   input::placeholder {
     color: var(--GreyScale-Grey-400, #bdbdbd);
